@@ -5,21 +5,15 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import co.siten.myvtg.bean.RequestBean;
 import co.siten.myvtg.dao.UserDao;
 import co.siten.myvtg.model.myvtg.User;
 import co.siten.myvtg.util.Constants;
-import co.siten.myvtg.validation.ValidationError;
-import co.siten.myvtg.validation.ValidationErrorBuilder;
 
 public class BaseController {
 	
@@ -62,17 +56,6 @@ public class BaseController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-	}
-
-	@ExceptionHandler
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public ValidationError handleException(MethodArgumentNotValidException exception) {
-		return createValidationError(exception);
-	}
-
-	private ValidationError createValidationError(MethodArgumentNotValidException e) {
-
-		return ValidationErrorBuilder.fromBindingErrors(e.getBindingResult());
 	}
 
 }
