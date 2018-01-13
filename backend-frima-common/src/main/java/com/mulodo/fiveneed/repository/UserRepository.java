@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.mulodo.fiveneed.entity.MstUser;
+import com.vietis.carpark.entity.MstUser;
 
 public interface UserRepository
 		extends PagingAndSortingRepository<MstUser, Long> {

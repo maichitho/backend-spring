@@ -2,8 +2,8 @@ package com.mulodo.fiveneed.bean.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mulodo.fiveneed.bean.ResponseBean;
-import com.mulodo.fiveneed.entity.MstUser;
-import com.mulodo.fiveneed.entity.MstUserProfile;
+import com.vietis.carpark.entity.MstUser;
+import com.vietis.carpark.entity.MstUserProfile;
 
 public class LoginResponseBean extends ResponseBean {
 	@JsonProperty("auto_login_token")

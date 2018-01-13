@@ -3,7 +3,6 @@ package com.mulodo.fiveneed.service;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -25,10 +24,6 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,22 +39,12 @@ import com.mulodo.fiveneed.bean.response.LoginResponseBean;
 import com.mulodo.fiveneed.bean.response.SocialLoginResponse;
 import com.mulodo.fiveneed.common.util.CommonUtil;
 import com.mulodo.fiveneed.common.util.EmailUtil;
-import com.mulodo.fiveneed.common.util.StringUtils;
 import com.mulodo.fiveneed.constant.AppHttpStatus;
 import com.mulodo.fiveneed.constant.Constants;
 import com.mulodo.fiveneed.constant.EnvironmentKey;
-import com.mulodo.fiveneed.entity.MstUser;
-import com.mulodo.fiveneed.entity.MstUserProfile;
-import com.mulodo.fiveneed.entity.TblChat;
-import com.mulodo.fiveneed.entity.TblProduct;
-import com.mulodo.fiveneed.entity.TblQuestion;
-import com.mulodo.fiveneed.repository.ChatRepository;
-import com.mulodo.fiveneed.repository.PaymentRepositoryJPA;
-import com.mulodo.fiveneed.repository.ProductOrderRepository;
 import com.mulodo.fiveneed.repository.ProductRepository;
-import com.mulodo.fiveneed.repository.QuestionRepository;
-import com.mulodo.fiveneed.repository.UserProfileRepository;
 import com.mulodo.fiveneed.repository.UserRepository;
+import com.vietis.carpark.entity.MstUser;
 
 @Service("UserService")
 @Transactional(rollbackFor = Exception.class)
@@ -72,32 +57,7 @@ public class UserService extends BaseService {
 	UserRepository userDao;
 
 	@Autowired
-	ProductOrderRepository productOrderRepo;
-
-	@Autowired
 	ProductRepository productRepo;
-
-	@Autowired
-	PaymentRepositoryJPA paymentRepo;
-
-	@Autowired
-	UserProfileRepository profileRepo;
-
-	@Autowired
-	QuestionRepository questionRepo;
-
-	@Autowired
-	ChatRepository chatRepo;
-
-	public void getProfile(ResponseBean response) {
-		MstUser user = checkTokenInSession();
-		if (user == null) {
-			response.setStatus(AppHttpStatus.AUTH_FAILED);
-			return;
-		}
-		MstUserProfile profile = profileRepo.findOne(user.getId());
-		response.setData(profile);
-	}
 
 	/*
 	 * API M05
@@ -125,15 +85,6 @@ public class UserService extends BaseService {
 		user.setIsDeleted(false);
 		user.setActivationKey(UUID.randomUUID().toString());
 		userDao.save(user);
-		MstUserProfile profile = new MstUserProfile();
-		profile.setUserId(user.getId());
-		profile.setCreatedBy(user.getId());
-		profile.setUserName(user.getUserName());
-		profile.setEmail(user.getEmail());
-		profile.setStatus(user.getStatus());
-		profile.setCreatedAt(user.getCreatedAt());
-		profile.setIsDeleted(user.getIsDeleted());
-		profileRepo.save(profile);
 
 		// TODO send mail , chuoi active_key
 
@@ -184,8 +135,6 @@ public class UserService extends BaseService {
 			user.setAccessToken(token);
 			bean.setAccessToken(token);
 			userDao.save(user);
-			MstUserProfile profile = profileRepo.findOne(user.getId());
-			bean.setUserprofile(profile);
 		} else {
 			response.setStatus(AppHttpStatus.AUTH_FAILED);
 			return;
@@ -213,28 +162,6 @@ public class UserService extends BaseService {
 			userDao.save(mstUser);
 			return;
 		}
-	}
-
-	public void updateProfile(MstUserProfile profile, ResponseBean response) {
-		MstUser user = checkTokenInSession();
-		if (user == null || !profile.getId().equals(user.getId())) {
-			response.setStatus(AppHttpStatus.AUTH_FAILED);
-			return;
-		}
-		MstUserProfile profileUpdate = profileRepo.findOne(user.getId());
-		profileUpdate.setUpdatedAt(CommonUtil.getCurrentTime());
-		profileUpdate.setUpdatedBy(user.getId());
-		profileUpdate.copyInfo(profile);
-		profileRepo.save(profileUpdate);
-
-		user.setUpdatedAt(CommonUtil.getCurrentTime());
-		user.setUpdatedBy(user.getId());
-		if (!CommonUtil.isEmpty(profile.getEmail()))
-			user.setEmail(profile.getEmail());
-		if (!CommonUtil.isEmpty(profile.getUserName()))
-			user.setUserName(profile.getUserName());
-		userDao.save(user);
-		response.setData(profileUpdate);
 	}
 
 	public void updateProfileSetting(MstUser profile, ResponseBean response) {
@@ -271,71 +198,6 @@ public class UserService extends BaseService {
 		response.setData(user);
 	}
 
-	public void leaveMember(ResponseBean response) {
-		MstUser user = checkTokenInSession();
-		if (user == null) {
-			response.setStatus(AppHttpStatus.AUTH_FAILED);
-			return;
-		}
-
-		List<TblProduct> productList = productRepo.findByStatusAndCreatedBy(TblProduct.STATUS_BUYING, user.getId());
-
-		// User is buying: leave denied
-		if (!productList.isEmpty()) {
-			response.setStatus(AppHttpStatus.USER_BUYING);
-			return;
-		} else {
-			MstUserProfile profile = profileRepo.findOne(user.getId());
-			user.setStatus(MstUser.LEAVE);
-			profile.setStatus(MstUser.LEAVE);
-			user.setIsDeleted(true);
-			profile.setIsDeleted(true);
-
-			user.setUpdatedAt(CommonUtil.getCurrentTime());
-			user.setUpdatedBy(user.getId());
-
-			profile.setUpdatedAt(CommonUtil.getCurrentTime());
-			profile.setUpdatedBy(user.getId());
-
-			profileRepo.save(profile);
-			userDao.save(user);
-			List<TblProduct> publicList = productRepo.findByStatusAndCreatedBy(TblProduct.STATUS_PUBLISHED,
-					user.getId());
-			for (TblProduct t : publicList) {
-				t.setStatus(TblProduct.STATUS_DRAFT);
-			}
-			// Update product to draft
-			if (!publicList.isEmpty())
-				productRepo.save(publicList);
-			response.setStatus(AppHttpStatus.SUCCESS);
-		}
-	}
-
-	public void saveContact(TblQuestion question, ResponseBean response) {
-		MstUser user = checkTokenInSession();
-		if (user == null) {
-			response.setStatus(AppHttpStatus.AUTH_FAILED);
-			return;
-		}
-		question.setCreatedAt(CommonUtil.getCurrentTime());
-		question.setCreatedBy(user.getId());
-		questionRepo.save(question);
-	}
-
-	public void getComment(int page, int size, String sortBy, String sortType, ResponseBean response) {
-		MstUser user = checkTokenInSession();
-		if (user == null) {
-			response.setStatus(AppHttpStatus.AUTH_FAILED);
-			return;
-		}
-		String sortByProperty = StringUtils.snakeCaseToCamelCase(sortBy);
-		Sort.Order order = new Sort.Order(
-				Constants.ORDER_ASC.equalsIgnoreCase(sortType) ? Direction.ASC : Direction.DESC, sortByProperty)
-						.ignoreCase();
-		Page<TblChat> resultPage = chatRepo.searchComment(user.getId(), new PageRequest(page, size, new Sort(order)));
-		response.setData(resultPage);
-	}
-
 	/*
 	 * API M03
 	 * 
@@ -366,7 +228,8 @@ public class UserService extends BaseService {
 		StringWriter sw = new StringWriter();
 		template.merge(context, sw);
 
-//		sendEmail(environment.getProperty("mail.user"), user.getEmail(), "Here is your new password", sw.toString());
+		// sendEmail(environment.getProperty("mail.user"), user.getEmail(), "Here is
+		// your new password", sw.toString());
 
 	}
 
@@ -524,16 +387,6 @@ public class UserService extends BaseService {
 			response.setAccessToken(user.getAccessToken());
 
 			userDao.save(user);
-
-			MstUserProfile profile = new MstUserProfile();
-			profile.setUserId(user.getId());
-			profile.setCreatedBy(user.getId());
-			profile.setUserName(user.getUserName());
-			profile.setStatus(MstUser.ACTIVE);
-			profile.setEmail(user.getEmail());
-			profile.setCreatedAt(user.getCreatedAt());
-			profile.setIsDeleted(user.getIsDeleted());
-			profileRepo.save(profile);
 		}
 	}
 

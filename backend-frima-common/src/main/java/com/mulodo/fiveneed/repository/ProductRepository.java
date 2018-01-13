@@ -7,7 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.mulodo.fiveneed.entity.TblProduct;
+
+import com.vietis.carpark.entity.TblProduct;
 
 public interface ProductRepository extends JpaRepository<TblProduct, Long> {
 	public List<TblProduct> findByStatusAndCreatedBy(String status, long userId);

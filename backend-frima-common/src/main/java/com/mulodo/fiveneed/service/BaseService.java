@@ -9,8 +9,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.mulodo.fiveneed.common.util.CommonUtil;
-import com.mulodo.fiveneed.entity.MstUser;
 import com.mulodo.fiveneed.repository.UserRepository;
+import com.vietis.carpark.entity.MstUser;
 
 /**
  * Base Service
