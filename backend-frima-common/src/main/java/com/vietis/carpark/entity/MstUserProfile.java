@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.mulodo.fiveneed.common.util.CommonUtil;
+import com.vietis.carpark.common.util.CommonUtil;
 
 /**
  * The persistent class for the mst_user_profile database table.
