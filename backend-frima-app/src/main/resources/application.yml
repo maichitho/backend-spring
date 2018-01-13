@@ -1,0 +1,3 @@
+server:
+  port: 8877
+  contextPath: /api/app
