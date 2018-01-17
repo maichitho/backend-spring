@@ -1,0 +1,113 @@
+
+body{
+    margin-top: 50px;
+}
+
+.header-form-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 14px;
+    border: 1px  solid #DDDDDD;
+    border-radius: 5px;
+    margin: 10px 0px 10px 3px;
+}
+
+.header-form-input:focus {
+    width: 100%;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 14px;
+    border:  1px  solid #552373;
+    border-radius: 5px;
+    margin: 10px 0px 10px 3px;
+}
+
+input[id=loginForgotPasswordBtn] {
+    float: right;
+    margin-bottom: 0px;
+    background: #ffffff;
+    border: none;
+    font-size: 12px;
+    color: #552373;
+    margin-top: -30px;
+}
+
+div[id=checkRemember]{
+    font-size: 12px;
+    width: 60%;
+}
+
+.btn-primary-header-form-button{
+    height: 45px;
+    color: #552373;
+    width: 140px;
+    font-size: 16px;
+    margin: 20px 0px 0px 3px;
+    background: #fff;
+    border:  1px  solid #552373;
+    border-radius: 5px;
+}
+
+.btn-primary-header-form-button:hover{
+    cursor: not-allowed;
+    height: 45px;
+    color: #ffffff;
+    width: 140px;
+    font-size: 16px;
+    margin: 20px 0px 0px 3px;
+    background: #552373;
+    border:  1px  solid #552373;
+    border-radius: 5px;
+}
+
+.gravity-header-centrer {
+    background: #DDDDDD;
+    float: left;
+    width: 1px;
+    height: 350px;
+    margin: 10px 0px 0px -15px;
+}
+
+.h4-title-user{
+    color: #552373;
+    font-size: 25px;
+    padding: 10px 0px 10px;
+}
+
+.boder-footer-container{
+    margin: 50px 0px 10px 0px;
+    background: #DDDDDD;
+    height: 1px;
+}
+
+.btn-uk-car-park{
+    float: left;
+    height: 45px;
+    width: 120px;
+    background: #ffffff;
+    color: #f5a058;
+    padding: 6px 0px 40px 0px;
+    border:  1px solid #f5a058;
+    border-radius: 5px;
+}
+
+.link-car-footer{
+    float: left;
+    color: #552373;
+    font-size: 16px;
+    text-decoration: none;
+	padding:15px 0px 20px 20px;
+}
+
+.getit-footer{
+    float: right;
+    color: #552373;
+    margin:10px 50px 20px 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .link-car-footer{
+        display: none;
+    }
+}

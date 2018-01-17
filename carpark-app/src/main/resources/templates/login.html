@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login</title>
+<link rel="stylesheet" th:href="@{/css/home/login.css}"
+	href="../../css/home/login.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+		href="../../css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-1 col-lg-1"></div>
+
+			<div class="col-sm-4 col-lg-4">
+
+				<form class="header-form-login-form" th:action="@{/login}" method="post">
+					<fieldset>
+
+						<h4 class="h4-title-user">USER LOG IN</h4>
+
+						<div class="form-group-user">
+							<input type="text" id="username" class="header-form-input"
+								name="username" placeholder="Email" value=""> <span
+								class="validation-error"></span>
+						</div>
+
+						<div class="form-group-user">
+							<input type="password" id="password"
+								class=" header-form-input" name="password"
+								placeholder="Password" value=""> <span
+								class="validation-error"></span>
+						</div>
+
+						<div class="header-form-strip">
+							<div class="checkbox" id=checkRemember>
+								<label> <input type="checkbox" value="on"> <span>Remember
+										me</span>
+								</label>
+							</div>
+							<input type="button" id="loginForgotPasswordBtn"
+								value="Forgot password ? ">
+						</div>
+
+						<button class="btn-primary-header-form-button" type="submit"
+							>
+							<span class="btn-header-button-user" id="login-user">LOG
+								IN</span>
+						</button>
+					</fieldset>
+				</form>
+			</div>
+
+			<div class="col-sm-1 col-lg-1"></div>
+
+			<div class="col-sm-1 col-lg-1">
+				<div class="gravity-header-centrer"></div>
+			</div>
+
+			<div class="col-sm-4 col-lg-4">
+				<form class="header-form-signup-form">
+					<fieldset>
+						<input type="email" name="email" style="display: none;"> <input
+							type="password" name="password" style="display: none;">
+						<h4 class="h4-title-user">SIGN UP</h4>
+
+						<div class="form-group-user">
+							<input type="text" class="header-form-input"
+								name="signupFirstName" placeholder="First name" value="">
+							<span class="validation-error"></span>
+						</div>
+
+						<div class="form-group-user">
+							<input type="text" class="header-form-input"
+								name="signupLastName" placeholder="Last name" value="">
+							<span class="validation-error"></span>
+						</div>
+
+						<div class="form-group-user">
+							<input type="text" class="header-form-input" name="email"
+								placeholder="Email" value=""> <span
+								class="validation-error"></span>
+						</div>
+
+						<div class="form-group-user">
+							<input type="password" class="header-form-input" name="password"
+								placeholder="Password" value=""> <span
+								class="validation-error"></span>
+						</div>
+
+						<div class="header-form-strip">
+							<div class="checkbox">
+								<label> <input type="checkbox" value="on"> <span>
+										<span>I would like to receive Indigo newsletters</span>
+								</span>
+								</label>
+							</div>
+						</div>
+
+						<button class="btn-primary-header-form-button" type="submit"
+							disabled="">
+							<span class="btn-header-button-user">SIGN UP</span>
+						</button>
+					</fieldset>
+				</form>
+			</div>
+			<div class="col-sm-1 col-lg-1"></div>
+
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="boder-footer-container"></div>
+			<div class="col-sm-1 col-lg-1"></div>
+
+			<div class="col-sm-8 col-lg-8">
+				<button class="btn-uk-car-park" type="submit"
+					onmouseover="style.background='#f5a058' ,style.color='white'"
+					onmouseout="style.background='#ffffff',style.color='#f5a058'">
+					<h5>UK Car Parks</h5>
+				</button>
+
+				<a class="link-car-footer"
+					href="https://uk.parkindigo.com/en/london-car-parks"> <span
+					onmouseover="style.color='#10552373'"
+					onmouseout="style.color='#552373'">London Car Parks</span>
+				</a> <a class="link-car-footer"
+					href="https://uk.parkindigo.com/en/pay-a-parking-ticket"> <span
+					onmouseover="style.color='#10552373'"
+					onmouseout="style.color='#552373'">Pay a Parking ticket</span>
+				</a>
+			</div>
+
+			<div class="col-sm-3 col-lg-3">
+				<span class="getit-footer"> Get It !</span>
+			</div>
+
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/zlib/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/zlib/bootstrap.min.js"></script>
+</body>
+</html>

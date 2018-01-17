@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:fragment="header-css">
+	<!-- this is header-css -->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" th:href="@{/css/main.css}"
+		href="../../css/main.css" />
+		<link rel="stylesheet" th:href="@{/css/search.css}"
+		href="../../css/search.css" />
+</div>
+</head>
+<body>
+	<div th:fragment="header">
+		<div class="container" id="header-search">
+			<a href="#" class="header-logo"><img src="img/logo.PNG" alt=""></a>
+			<div class="header-container">
+				<div class="">
+					<a href="#">Contact Us</a>
+					<ul class="">
+						<li class="nav nav-tabs"><a href="#">Monthly Parking</a></li>
+						<li class="nav nav-tabs"><a href="#">Careers</a></li>
+						<li class="nav nav-tabs"><a href="#">Pay a violation</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="nav-right">
+				<ul>
+					<li class="nav nav-tabs" id="btn-get-app">Get the App<span
+						class="glyphicon glyphicon-chevron-down"></span></li>
+					<li class="nav nav-tabs btn-user"><img src="img/user-icon.png"
+						alt=""></li>
+					<li class="nav nav-tabs btn-cart"><img src="img/cart-icon.png"
+						alt=""></li>
+					<li class="nav nav-tabs btn-language" id="btn-language"><img
+						src="img/en-icon.png" alt=""> <span class="language">EN</span>
+					</li>
+					<li class="btn-menu " id="header-btn-menu"><img
+						src="img/menu-icon.png" alt=""></li>
+				</ul>
+			</div>
+			<div class="header-menu list-group">
+				<li class="list-group-item"><a href="#">Contact Us</a></li>
+				<li class="list-group-item"><a href="#">Monthly Parking</a></li>
+				<li class="list-group-item"><a href="#">Careers</a></li>
+				<li class="list-group-item"><a href="#">Pay a violation</a></li>
+				<li class="list-group-item" id="menu-get-app"><a href="#">Get
+						the App</a></li>
+				<li class="list-group-item" id="menu-language"><a href="#">Language</a></li>
+			</div>
+			<div class="list-group header-get-app">
+				<li class="list-group-item"><img src="img/ios-store.PNG" alt=""></li>
+				<li class="list-group-item"><img
+					src="img/google-play-store.PNG" alt=""></li>
+			</div>
+			<div class="header-language listgroup">
+				<li class="list-group-item"><img src="img/en-icon.png" alt="">EN</li>
+				<li class="list-group-item"><img src="img/th-icon.png" alt="">TH</li>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
