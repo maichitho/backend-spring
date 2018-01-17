@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// custom 403 access denied handler
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+		// http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 		http.sessionManagement().maximumSessions(1000000).sessionRegistry(sessionRegistry());
 		http.csrf().disable().authorizeRequests()
 				.antMatchers("/", "/home", "/about", "/js/**", "/img/**", "/css/**", "/fonts/**").permitAll()
